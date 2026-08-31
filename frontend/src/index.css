@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Signature palette: "scan console" dark theme ---- */
+  --color-bg: #080b12;
+  --color-bg-soft: #0d121c;
+  --color-surface: rgba(255, 255, 255, 0.045);
+  --color-surface-strong: rgba(255, 255, 255, 0.075);
+  --color-border: rgba(148, 163, 184, 0.14);
+  --color-border-strong: rgba(148, 163, 184, 0.28);
+
+  --color-scan: #22d3ee;      /* primary accent: the "AI is reading" cyan */
+  --color-scan-soft: #67e8f9;
+  --color-match: #34d399;     /* positive / matched */
+  --color-warn: #fbbf24;      /* moderate / warning */
+  --color-critical: #fb7185;  /* missing / critical */
+
+  --color-text: #e7ebf3;
+  --color-text-dim: #8b95a7;
+  --color-text-faint: #5b6474;
+
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-scan);
+  color: #061019;
+}
+
+/* Signature motif: a thin scanning line that sweeps across a container,
+   used on the hero mock dashboard and on loading states -- it's the one
+   piece of visual identity that literally represents "the AI is scanning
+   your resume". Kept out of every other surface so it stays meaningful. */
+@keyframes scan-sweep {
+  0% { transform: translateY(-10%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(110%); opacity: 0; }
+}
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-scan), transparent);
+  box-shadow: 0 0 12px 1px var(--color-scan);
+  animation: scan-sweep 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes grid-drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 48px 48px; }
+}
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(148,163,184,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148,163,184,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: grid-drift 24s linear infinite;
+}
+
+.glass {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.text-gradient {
+  background: linear-gradient(100deg, var(--color-scan) 0%, var(--color-match) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-scan);
+  outline-offset: 2px;
+}
