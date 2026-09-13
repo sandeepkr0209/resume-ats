@@ -20,7 +20,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://resume-ats-alpha-lyart.vercel.app",
+        "https://resume-e2sngx28a-sandeepkr0209s-projects.vercel.app/analyze",
     ],
     allow_credentials=True,
     allow_methods=["*"],
